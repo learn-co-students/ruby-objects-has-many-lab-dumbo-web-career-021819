@@ -1,26 +1,25 @@
-require 'pry'
-require_relative 'post.rb'
 class Author
+
   attr_accessor :name, :posts
-  def initialize(name)
-    @name = name
+
+  def initialize(author_name)
+    @name = author_name
+    @posts = []
   end
-  @@posts = []
-  def posts
-    @@posts
+
+  def add_post(post)
+    post.author = self
+    @posts << post
   end
-  def add_post(postarg)
-    # postarg = Post.new(postarg)          WHY NO
-    postarg.author = self
-    @@posts << postarg
+
+  def add_post_by_title(post_title)
+    new_post = Post.new(post_title) #DO NOT NAME THE SAME!
+    new_post.title = post_title
+    add_post(new_post)
   end
-  def add_post_by_title(titlearg)
-    titlearg = Post.new(titlearg)       # WHY YES?
-    # titlearg.title = titlearg
-    add_post(titlearg)
-  end
+
   def self.post_count
-    @@posts.length
+    Post.all.length
   end
-  # binding.pry
+
 end
